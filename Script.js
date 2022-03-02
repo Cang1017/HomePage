@@ -1,0 +1,3 @@
+function Download(script, textInput) {
+    
+}

@@ -1,0 +1,50 @@
+options:
+    ShowTime: 5 #sec
+
+
+
+
+on right click:
+    player isn't sneaking
+    event-block is crafting table:
+        cancel event
+        open workbench inventory to player
+        set {craftingtable-p::%player%::corloc} to "%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%"
+        set {craftingtable-p::%player%::loc} to location of event-block
+        if {craftingtable::%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%::%player%::*} is set:
+            loop 9 times:
+                set slot loop-value of player's current inventory to {craftingtable::%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%::%player%::%loop-value%}
+        
+on inventory close:
+    "%type of event-inventory%" contains "workbench inventory"
+    {craftingtable-p::%player%::loc} is set
+    loop 9 times:
+        slot loop-value of event-inventory is set:
+            set {craftingtable::%{craftingtable-p::%player%::corloc}%::%player%::%loop-value%} to slot loop-value of event-inventory
+            delete slot loop-value of event-inventory
+            set {craftingtable::%{craftingtable-p::%player%::corloc}%::%player%} to player
+        else:
+            delete {craftingtable::%{craftingtable-p::%player%::corloc}%::%player%::%loop-value%}
+    {craftingtable::%{craftingtable-p::%player%::corloc}%::%player%::*} isn't set:
+        delete {craftingtable::%{craftingtable-p::%player%::corloc}%::%player%}
+    delete {craftingtable-p::%player%::*}
+    loop {@ShowTime} times:
+        wait 1 second
+        
+on break:
+    event-block is crafting table
+    loop {craftingtable::%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%::*}:
+        {craftingtable-p::%loop-value-1%::loc} is set:
+            close inventory of loop-value-1
+        loop 9 times:
+            drop {craftingtable::%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%::%loop-value-1%::%loop-value-2%}
+            delete {craftingtable::%x-coord of location of event-block%,%y-coord of location of event-block%,%z-coord of location of event-block%::%loop-value-1%::%loop-value-2%}
+command /deletett:
+    trigger:
+        delete {craftingtable::*}
+        delete {craftingtable-p::*}
+
+
+
+
+
