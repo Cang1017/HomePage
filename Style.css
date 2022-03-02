@@ -1,0 +1,102 @@
+:root{
+    background-color: rgb(34, 34, 34);
+
+}
+.title{
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    color: #df8107;
+    background-color: rgb(39, 52, 66);
+    padding: 1px;
+}
+@keyframes script{
+    0%   {top: 700px;}
+    60%  {top: 85px;}
+    100% {top: 100px;}
+}.script{
+    position: relative;
+    top: 100px;
+    margin-left:  70px;
+    margin-right: 70px;
+    margin-bottom: -15px;
+    background-color: #8e989e;
+    border-bottom-style:groove;
+    border-radius: 24px;
+    animation-name: script;
+    animation-duration: 0.8s;
+}.script h2{
+    position: relative;
+    margin-bottom: -10px;
+    top: 3px;
+    left: 10px;
+}.script h2 span{
+    position: relative;
+    margin-right: 60px;
+    left: 15px;
+}.script #last:hover {
+    background-color: #228525
+}.script #last{
+    position: relative;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+    padding: 10px 15px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}.script #showv:hover {
+    background-color: #854e20
+}.script #showv{
+    position: relative;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+    padding: 10px 15px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #af672b;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}.script #watch:hover {
+    background-color: #1a1169
+}.script #watch{
+    position: relative;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+    padding: 10px 15px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #382baf;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}.script #showv:active,
+ .script #last:active,
+ .script #watch:active{
+    background-color: #3e828e;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}.script ul{
+    position: static;
+    margin-bottom: 10px;
+}
