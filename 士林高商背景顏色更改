@@ -1,0 +1,19 @@
+#URL: http://onlinetest3.slhs.tp.edu.tw/
+
+#enter in Console:
+
+
+var body=document.querySelector("body");
+var isBlue=false;
+setInterval(function(){
+if(isBlue)
+{
+    body.style.backgroundColor="#22313A";
+}
+else
+{
+    body.style.backgroundColor="#22313A";
+}
+isBlue = !isBlue;
+
+},1000);
